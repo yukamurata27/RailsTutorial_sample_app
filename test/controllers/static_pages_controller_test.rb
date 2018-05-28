@@ -18,7 +18,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     	get static_pages_home_url
     	assert_response :success
     	# assert_select checks if there exists such a tag (e.g. title tag that has Home | xxx)
-  		assert_select "title", "Home | #{@base_title}"
+  		assert_select "title", "#{@base_title}"
   	end
 
   	test "should get help" do
