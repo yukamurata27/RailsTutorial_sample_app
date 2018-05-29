@@ -26,6 +26,10 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     # need to add 'include ApplicationHelper' to test_helper.rb
     get contact_path
     assert_select "title", full_title("Contact")
+
+    # test for signup_path
+    get signup_path
+    assert_select "title", full_title("Sign up")
   end
 end
 
