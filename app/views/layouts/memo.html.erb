@@ -1,0 +1,51 @@
+<!-- This is a layout for the other html files -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all',
+                               'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application',
+                               'data-turbolinks-track': 'reload' %>
+    
+    <!-- Following is a conditional comment -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+
+    <!-- Following is a replacement of the code above -->
+    <!-- looking for app/views/layouts/_shim.html.erb -->
+    <%= render 'layouts/shim' %>
+  </head>
+
+  <body>
+  	<!-- Equivalent to line 29-44  -->
+  	<%= render 'layouts/header' %>
+  	
+  	<!--
+    	<header class="navbar navbar-fixed-top navbar-inverse">
+      	<div class="container">
+      		<!-- Following is a ruby helper -->
+      		<!-- 1st arg is a linktext (text that has a link) -->
+      		<!-- 2nd arg is a URL -->
+      		<!-- 3rd arg is a optionhash (can use HTML options in ruby code) -->
+     		<%= link_to "sample app", '#', id: "logo" %>
+        	<nav>
+          	<ul class="nav navbar-nav navbar-right">
+            	<li><%= link_to "Home",   '#' %></li>
+            	<li><%= link_to "Help",   '#' %></li>
+            	<li><%= link_to "Log in", '#' %></li>
+          	</ul>
+        	</nav>
+      	</div>
+    	</header>
+	 -->
+
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+</html>

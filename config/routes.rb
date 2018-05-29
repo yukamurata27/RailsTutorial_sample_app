@@ -1,12 +1,25 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   root 'static_pages#home'
   
   # routes for pages (get)
-  get 'static_pages/home'
+  # get 'static_pages/home'
 
-  get 'static_pages/help'
+  # 1) typical route
+  # get 'static_pages/help'
+  # 2) change routes (static_pages/help -> /help). Use like 'help_path'. 'help' of help_path comes from '/help'
+  # GETリクエストが /help に送信されたときにStaticPagesコントローラーのhelpアクションを呼び出してくれる
+  # get '/help', to: 'static_pages#help'
+  # 3) can change named route with as: option. Use like 'helf_path'
+  # get  '/help', to: 'static_pages#help', as: 'helf'
+  get '/help', to: 'static_pages#help'
 
-  get 'static_pages/about'
+  #get 'static_pages/about'
+  get '/about', to: 'static_pages#about'
 
-  get 'static_pages/contact'
+  #get 'static_pages/contact'
+  get '/contact', to: 'static_pages#contact'
+
+  get '/signup', to: 'users#new'
 end

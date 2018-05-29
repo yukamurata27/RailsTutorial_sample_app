@@ -10,4 +10,8 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  # Allows to use Application helper in teh test environment
+  # Now you can use the 'full_title' helper in site_layout_test.rb
+  include ApplicationHelper
 end

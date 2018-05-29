@@ -4,14 +4,23 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all',
-    				'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application',
-    				'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/rails_default' %>
+    
+    <!-- partial (matching to a file whose name is starting with '_') -->
+    <!-- Following is a conditional comment for < IE 9-->
+    <!-- Looking for app/views/layouts/_shim.html.erb -->
+    <!-- underscore of the file name is used for partial -->
+    <%= render 'layouts/shim' %>
   </head>
 
   <body>
-    <%= yield %>
+  	<!-- partial -->
+  	<%= render 'layouts/header' %>
+    <div class="container">
+      <%= yield %>
+      <!-- place is a matter of its looking -->
+      <%= render 'layouts/footer' %>
+    </div>
+    <%#= render 'layouts/footer' %>
   </body>
 </html>
