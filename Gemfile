@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '5.1.4'
+# need bcrypt to hash password
+gem 'bcrypt',         '3.1.11'
 # Adding Bootstrap (LESS->Sass)
 # Don't forget to execute "bundle install when adding sth to Gemfile"
 # Can use LESS variables (https://getbootstrap.com/docs/3.3/customize/)
@@ -12,8 +14,10 @@ gem 'coffee-rails', '4.2.2'
 gem 'jquery-rails', '4.3.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.7.0'
+# add gem for mysql when using mysql instead of sqlite3
 
 group :development, :test do
+  # remove the following code when using sqlite3
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
 end
