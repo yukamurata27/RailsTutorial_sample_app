@@ -19,6 +19,8 @@ gem 'jbuilder',     '2.7.0'
 group :development, :test do
   # remove the following code when using sqlite3
   gem 'sqlite3', '1.3.13'
+  # debug console (byebug) will be shown to server screen
+  # makes it easy to debug by checking current states or info
   gem 'byebug',  '9.0.6', platform: :mri
 end
 

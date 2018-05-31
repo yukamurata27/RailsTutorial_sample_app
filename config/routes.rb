@@ -22,4 +22,10 @@ Rails.application.routes.draw do
   get '/contact', to: 'static_pages#contact'
 
   get '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
+
+  # Add the following to add URL's like /users/1 
+  # this was generated automatically in prev projects
+  # this makes REST architechture
+  resources :users
 end

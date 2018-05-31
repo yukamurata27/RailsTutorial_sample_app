@@ -1,0 +1,13 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+      	<!-- Use Gravatar (free service) with 'gravatar_for' method-->
+  		<!-- this method is defined in helpers/users_helper.rb -->
+        <%= gravatar_for @user, size: 80 %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>

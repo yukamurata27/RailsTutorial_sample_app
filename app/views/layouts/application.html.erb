@@ -17,9 +17,21 @@
   	<!-- partial -->
   	<%= render 'layouts/header' %>
     <div class="container">
+      <%# how welcome message or sth %>
+      <%# Way 1  %>
+        <%# flash.each do |message_type, message| %>
+          <!-- <div class="alert alert-<%#= message_type %>"><%#= message %></div> -->
+        <%# end %>
+      <%# Way 2 %>
+      <% flash.each do |message_type, message| %>
+        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+      <% end %>
+
       <%= yield %>
       <!-- place is a matter of its looking -->
       <%= render 'layouts/footer' %>
+      <!-- Debug Use (shows messages only on development environment) -->
+      <%= debug(params) if Rails.env.development? %>
     </div>
     <%#= render 'layouts/footer' %>
   </body>

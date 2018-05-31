@@ -28,7 +28,7 @@ class User < ApplicationRecord
 	#    また、存在性と値が一致するかどうかのバリデーションも追加される。
 	# 3) authenticateメソッドが使えるようになる。
 	#    (引数の文字列がパスワードと一致するとUserオブジェクトを、間違っているとfalseを返すメソッド) 。
-	#    !!user.authenticate(PSW) return true or false beacuse of !!
+	#    !!user.authenticate(PSW) return true or false beacuse of '!!''
 	#
 	# need to update Gemfile (bcrypt is required)
 	has_secure_password

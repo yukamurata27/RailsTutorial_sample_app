@@ -1,3 +1,36 @@
+<%# Form test goes to integration test %>
+<%# Make a new test file 'rails g integration_test users_signup' %>
+
 <% provide(:title, 'Sign up') %>
 <h1>Sign up</h1>
-<p>This will be a signup page for new users.</p>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user, url: signup_path) do |f| %>
+      <%# use partial for error message handling %>
+      <%# 複数のビューで使われるパーシャルは専用のディレクトリ「shared」によく置かれます %>
+      <%# app/views/shared ディレクトリをまずは作成　(まだなければ) %>
+      <%# following looks for _error_messages.html.erb %>
+      <%#%>
+      <%# エラーメッセージはモデルの検証時に生成される %>
+      <%# @user.errorsを使っている %>
+      <%= render 'shared/error_messages' %>
+      
+      <%= f.label :name %>
+      <%# Do like l.13 instead of 12 (add class to use Bootstrap) to nicely show error messages %>
+      <%#= f.text_field :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
