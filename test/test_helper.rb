@@ -11,6 +11,11 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  # テストユーザーがログイン中の場合にtrueを返す
+  def is_logged_in?
+    !session[:user_id].nil?
+  end
+
   # Allows to use Application helper in teh test environment
   # Now you can use the 'full_title' helper in site_layout_test.rb
   include ApplicationHelper

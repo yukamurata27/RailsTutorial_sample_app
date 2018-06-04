@@ -22,6 +22,9 @@ group :development, :test do
   # debug console (byebug) will be shown to server screen
   # makes it easy to debug by checking current states or info
   gem 'byebug',  '9.0.6', platform: :mri
+
+  # Rspec Test
+  gem 'rspec-rails', '~> 3.7'
 end
 
 group :development do

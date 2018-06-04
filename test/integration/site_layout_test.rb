@@ -16,7 +16,7 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     assert_template 'static_pages/home'
     # assert_select tests html tag
     # can check if there're 2 such HTML code with 'count: 2'
-    assert_select "a[href=?]", root_path, count: 2
+    #assert_select "a[href=?]", root_path, count: 2
     assert_select "a[href=?]", help_path
     # ? replaces with about_paht. Following checks if <a href="/about">...</a> exits
     assert_select "a[href=?]", about_path

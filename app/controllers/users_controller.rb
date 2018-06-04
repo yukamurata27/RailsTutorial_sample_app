@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def create
   	# In debugging 'params' looks like a collection of string,
-  	# but it can actually be used as 'symbols' (e.g. params[:user])
+  	# but it can be actually used as 'symbols' (e.g. params[:user])
     #
     # This is volnerable. Causes an error
     #@user = User.new(params[:user])
@@ -29,13 +29,18 @@ class UsersController < ApplicationController
     # so use the following instead
     @user = User.new(user_params)
     if @user.save
+      # * ログインの主な流れ
+      # * user id からセッションを作る
+      # * flash表示の準備
+      # * userのページへリダイレクト
+
+      log_in @user
       # 登録完了後に表示されるページにメッセージを表示し (この場合は新規ユーザーへのウェルカムメッセージ)
       # 2度目以降にはそのページにメッセージを表示しないようにする
       # flash変数に代入したメッセージは、リダイレクトした直後のページで表示できる
       #
       # Bootstrap CSSはflashのクラス用に4つのスタイルを持っています (success、info、warning、danger)
       #
-      ### currently not working ###
       flash[:success] = "Welcome to the Sample App!"
 
       # same as 'redirect_to user_url(@user)'
