@@ -37,7 +37,10 @@ class User < ApplicationRecord
 	has_secure_password
 
 	# need to check presence b/c it won't catch empty string ("") as < 6
-	validates :password, presence: true, length: { minimum: 6 }
+	# has_secure_passwordではオブジェクト生成時に存在性を検証するようになっているため、
+	# 空のパスワード (nil) が新規ユーザー登録時に有効になることはありません。
+	# allow_nil: true は登録内容の更新時にパスワードを書かなくてもOKにする。
+	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
 	# fixture向けのdigestメソッドを追加する
 	# 渡された文字列のハッシュ値を返す

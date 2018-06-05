@@ -3,6 +3,13 @@ source 'https://rubygems.org'
 gem 'rails',        '5.1.4'
 # need bcrypt to hash password
 gem 'bcrypt',         '3.1.11'
+# 実際にいそうなユーザー名を作成するgem
+# go to db/seeds.rb next
+gem 'faker',          '1.7.3'
+# add following 2 to use paginate method
+# (show only a limited number of users at one time)
+gem 'will_paginate',           '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
 # Adding Bootstrap (LESS->Sass)
 # Don't forget to execute "bundle install when adding sth to Gemfile"
 # Can use LESS variables (https://getbootstrap.com/docs/3.3/customize/)

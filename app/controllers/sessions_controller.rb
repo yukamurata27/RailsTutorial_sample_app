@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       # ログインしたユーザーを記憶する処理
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
       # following is same as user_url(user)
-      redirect_to @user
+      redirect_back_or @user
     else
       # flashではなくてflash.nowを使うとフラッシュが消える
       flash.now[:danger] = 'Invalid email/password combination'

@@ -1,0 +1,27 @@
+<%# @user.new_record?がtrueのときにはPOSTを、falseのときにはPATCHを使います %>
+<%= form_for(@user) do |f| %>
+  <%# use partial for error message handling %>
+  <%# 複数のビューで使われるパーシャルは専用のディレクトリ「shared」によく置かれます %>
+  <%# app/views/shared ディレクトリをまずは作成　(まだなければ) %>
+  <%# following looks for _error_messages.html.erb %>
+  <%#%>
+  <%# エラーメッセージはモデルの検証時に生成される %>
+  <%# @user.errorsを使っている %>
+  <%= render 'shared/error_messages', object: @user %>
+
+  <%= f.label :name %>
+  <%# Do like l.15 instead of 14 (add class to use Bootstrap) to nicely show error messages %>
+  <%#= f.text_field :name %>
+  <%= f.text_field :name, class: 'form-control' %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email, class: 'form-control' %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, class: 'form-control' %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

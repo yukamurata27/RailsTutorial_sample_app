@@ -8,7 +8,7 @@ module UsersHelper
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
     # 1)
     # size = options[:size]
-    # 2) nothing to 
+    # 2) nothing to do 
     #
     
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"

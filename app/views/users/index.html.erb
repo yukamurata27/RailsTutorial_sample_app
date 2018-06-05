@@ -1,0 +1,12 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+
+<%# paginate allows to show only a limited number of users %>
+<%= will_paginate %>
+
+<ul class="users">
+  <%# Rails infers @users (User.all) and do sth for each %>
+  <%= render @users %>
+</ul>
+
+<%= will_paginate %>

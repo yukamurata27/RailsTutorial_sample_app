@@ -11,6 +11,10 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   # 2) Check if the right page template is drawn
   # 3) Check if links (Home, Help, About, Contact) work correctly
 
+  def setup
+    @user = users(:michael)
+  end
+
   test "layout links" do
     get root_path
     assert_template 'static_pages/home'
@@ -30,6 +34,18 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     # test for signup_path
     get signup_path
     assert_select "title", full_title("Sign up")
+  end
+
+  test "layout links when logged in" do
+    log_in_as(@user)
+    get root_path
+    assert_select "a[href=?]", users_path
+    assert_select "a[href=?]", logout_path
+  end
+
+  test "layout links when not logged in" do
+    get root_path
+    assert_select "a[href=?]", login_path
   end
 end
 
