@@ -16,7 +16,22 @@ class ActiveSupport::TestCase
     !session[:user_id].nil?
   end
 
+  # テストユーザーとしてログインする
+  def log_in_as(user)
+    session[:user_id] = user.id
+  end
+
   # Allows to use Application helper in teh test environment
   # Now you can use the 'full_title' helper in site_layout_test.rb
   include ApplicationHelper
+end
+
+class ActionDispatch::IntegrationTest
+
+  # テストユーザーとしてログインする
+  def log_in_as(user, password: 'password', remember_me: '1')
+    post login_path, params: { session: { email: user.email,
+                                          password: password,
+                                          remember_me: remember_me } }
+  end
 end

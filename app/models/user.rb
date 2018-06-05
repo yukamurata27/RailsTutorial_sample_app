@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+	# アクセス可能な属性を作成します。
+	attr_accessor :remember_token
+
 	# u1.errors.full_messages shows you error messages when it's not valid
 	# Similarly u1.errors.messages shows you error messages in a hash format
 	#      u1.errors.messages[:email] shows you an error message for 'email'
@@ -43,4 +46,26 @@ class User < ApplicationRecord
                                                   BCrypt::Engine.cost
     	BCrypt::Password.create(string, cost: cost)
   	end
+
+  	# ランダムなトークンを返す
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # 永続セッションのためにユーザーをデータベースに記憶する
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  # 渡されたトークンがダイジェストと一致したらtrueを返す
+  def authenticated?(remember_token)
+  	return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  # ユーザーのログイン情報を破棄する
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
 end
