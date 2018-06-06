@@ -1,6 +1,7 @@
 class User < ApplicationRecord
-	# アクセス可能な属性を作成します。
-	attr_accessor :remember_token
+	# アクセス可能な属性を作成
+	attr_accessor :remember_token, :activation_token, :activated, :activated_at
+  	before_create :create_activation_digest
 
 	# u1.errors.full_messages shows you error messages when it's not valid
 	# Similarly u1.errors.messages shows you error messages in a hash format
@@ -10,8 +11,10 @@ class User < ApplicationRecord
 	# before save a user to DB, change email to lower case (callback)
 	# in models, can omit 'self' in RHD (self.email.downcase <=> email.downcase)
 	#           but cannot omit 'self' in LHS
-	# following is same as before_save { self.email = email.downcase } (another way)
-	before_save { email.downcase! }
+	# following is same as
+	# before_save { self.email = email.downcase } (another way)
+	# or before_save { email.downcase! }
+	before_save   :downcase_email
 
 	# If the last values are a hash (e.g. presence: true), no need to use brackets
 	# validates :name, presence: true
@@ -51,24 +54,50 @@ class User < ApplicationRecord
   	end
 
   	# ランダムなトークンを返す
-  def User.new_token
-    SecureRandom.urlsafe_base64
-  end
+  	def User.new_token
+   		SecureRandom.urlsafe_base64
+  	end
 
-  # 永続セッションのためにユーザーをデータベースに記憶する
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
-  end
+  	# 永続セッションのためにユーザーをデータベースに記憶する
+  	def remember
+    	self.remember_token = User.new_token
+    	update_attribute(:remember_digest, User.digest(remember_token))
+  	end
 
-  # 渡されたトークンがダイジェストと一致したらtrueを返す
-  def authenticated?(remember_token)
-  	return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
-  end
+  	# トークンがダイジェストと一致したらtrueを返す
+  	def authenticated?(attribute, token)
+    	digest = send("#{attribute}_digest") #self.send("#{attribute}_digest")
+    	return false if digest.nil?
+    	BCrypt::Password.new(digest).is_password?(token)
+  	end
 
-  # ユーザーのログイン情報を破棄する
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
+  	# ユーザーのログイン情報を破棄する
+  	def forget
+    	update_attribute(:remember_digest, nil)
+  	end
+
+  	# アカウントを有効にする
+  	def activate
+    	#update_attribute(:activated,    true)
+    	#update_attribute(:activated_at, Time.zone.now)
+  		update_columns(activated: true, activated_at: Time.zone.now)
+  	end
+
+  	# 有効化用のメールを送信する
+  	def send_activation_email
+    	UserMailer.account_activation(self).deliver_now
+  	end
+
+  	private
+  		# メールアドレスをすべて小文字にする
+    	def downcase_email
+      		#self.email = email.downcase
+      		email.downcase!
+    	end
+
+    	# 有効化トークンとダイジェストを作成および代入する
+    	def create_activation_digest
+      		self.activation_token  = User.new_token
+      		self.activation_digest = User.digest(activation_token)
+    	end
 end

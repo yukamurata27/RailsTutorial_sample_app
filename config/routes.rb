@@ -34,4 +34,5 @@ Rails.application.routes.draw do
   # this was generated automatically in prev projects
   # this makes REST architechture
   resources :users
+  resources :account_activations, only: [:edit]
 end

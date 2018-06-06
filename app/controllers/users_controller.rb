@@ -8,12 +8,13 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: :destroy
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
   	# :id is obtained from route (users/1)
   	@user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
 
   	# another way to debug
   	# byebug gem allows to use 'debugger' method
@@ -46,17 +47,26 @@ class UsersController < ApplicationController
       # * flash表示の準備
       # * userのページへリダイレクト
 
-      log_in @user
-      # 登録完了後に表示されるページにメッセージを表示し (この場合は新規ユーザーへのウェルカムメッセージ)
-      # 2度目以降にはそのページにメッセージを表示しないようにする
-      # flash変数に代入したメッセージは、リダイレクトした直後のページで表示できる
+      #log_in @user
+      
+      # * 登録完了後に表示されるページにメッセージを表示し (この場合は新規ユーザーへのウェルカムメッセージ)
+      # * 2度目以降にはそのページにメッセージを表示しないようにする
+      # * flash変数に代入したメッセージは、リダイレクトした直後のページで表示できる
       #
-      # Bootstrap CSSはflashのクラス用に4つのスタイルを持っています (success、info、warning、danger)
+      # * Bootstrap CSSはflashのクラス用に4つのスタイルを持っています (success、info、warning、danger)
       #
-      flash[:success] = "Welcome to the Sample App!"
+      #flash[:success] = "Welcome to the Sample App!"
 
-      # same as 'redirect_to user_url(@user)'
-      redirect_to @user
+      # * same as 'redirect_to user_url(@user)'
+      #redirect_to @user
+
+      # refactoring
+      # change
+      # UserMailer.account_activation(@user).deliver_now
+      # to
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end

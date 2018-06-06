@@ -1,0 +1,12 @@
+<%# 特殊なURLにアクセスするとメールのメッセージをその場でプレビューすることができます %>
+<%# これを利用するには、アプリケーションのdevelopment環境の設定に手を加える必要があります %>
+<%# Go to config/environments/development.rb %>
+<%# 次は自動生成したUserメイラーのプレビューファイルの更新が必要です %>
+<%# Go to test/mailers/previews/user_mailer_preview.rb %>
+
+Hi <%= @user.name %>,
+
+Welcome to the Sample App! Click on the link below to activate your account:
+
+<%# params[:email]からメールアドレスを取り出せる %>
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
