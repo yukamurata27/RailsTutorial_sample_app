@@ -1,7 +1,10 @@
 class User < ApplicationRecord
+	# UserモデルとMicropostモデルを関連付ける
+	# ユーザーが破棄された場合、ユーザーのマイクロポストも同様に破棄される
+	has_many :microposts, dependent: :destroy
+
 	# アクセス可能な属性を作成
 	attr_accessor :remember_token, :activation_token, :reset_token
-	#attr_accessor :remember_token, :activation_token, :activated, :activated_at
   	before_create :create_activation_digest
 
 	# u1.errors.full_messages shows you error messages when it's not valid
@@ -106,6 +109,12 @@ class User < ApplicationRecord
   	def password_reset_expired?
   		#「パスワード再設定メールの送信時刻が、現在時刻より2時間以上前 (早い) の場合」
     	reset_sent_at < 2.hours.ago
+  	end
+
+  	# 試作feedの定義
+  	# 完全な実装は次章の「ユーザーをフォローする」を参照
+  	def feed
+    	Micropost.where("user_id = ?", id)
   	end
 
   	private

@@ -6,6 +6,10 @@ gem 'bcrypt',         '3.1.11'
 # 実際にいそうなユーザー名を作成するgem
 # go to db/seeds.rb next
 gem 'faker',          '1.7.3'
+# 画像アップローダー
+gem 'carrierwave',             '1.2.2'
+# 画像をリサイズ
+gem 'mini_magick',             '4.7.0'
 # add following 2 to use paginate method
 # (show only a limited number of users at one time)
 gem 'will_paginate',           '3.1.6'
@@ -50,6 +54,7 @@ end
 
 group :production do
   gem 'pg', '0.20.0'
+  gem 'fog', '1.42'
 end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります

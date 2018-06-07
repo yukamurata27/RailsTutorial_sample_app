@@ -7,7 +7,7 @@
   <%#%>
   <%# エラーメッセージはモデルの検証時に生成される %>
   <%# @user.errorsを使っている %>
-  <%= render 'shared/error_messages', object: @user %>
+  <%= render 'shared/error_messages', object: f.object %> <%# user f.object instead of @user %>
 
   <%= f.label :name %>
   <%# Do like l.15 instead of 14 (add class to use Bootstrap) to nicely show error messages %>

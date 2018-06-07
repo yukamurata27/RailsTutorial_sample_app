@@ -29,3 +29,11 @@ User.create!(name:  "Example User",
                activated: true,
                activated_at: Time.zone.now)
 end
+
+# 最初の6人だけ
+users = User.order(:created_at).take(6)
+50.times do
+  # Faker gemを使います
+  content = Faker::Lorem.sentence(5)
+  users.each { |user| user.microposts.create!(content: content) }
+end

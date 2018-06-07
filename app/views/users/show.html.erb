@@ -4,10 +4,20 @@
     <section class="user_info">
       <h1>
       	<!-- Use Gravatar (free service) with 'gravatar_for' method-->
-  		<!-- this method is defined in helpers/users_helper.rb -->
+  		  <!-- this method is defined in helpers/users_helper.rb -->
         <%= gravatar_for @user, size: 80 %>
         <%= @user.name %>
       </h1>
     </section>
   </aside>
+  <div class="col-md-8">
+    <%# ユーザーのマイクロポストが1つもない場合には空のリストを表示させない %>
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
 </div>
