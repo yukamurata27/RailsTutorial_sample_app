@@ -37,8 +37,22 @@ Rails.application.routes.draw do
   # Add the following to add URL's like /users/1 
   # this was generated automatically in prev projects
   # this makes REST architechture
-  resources :users
+  # resources :users
+  resources :users do
+    # memberメソッドを使うとユーザーidが含まれているURLを扱うようになります
+    # (/users/1/following)
+    member do
+      get :following, :followers
+    end
+
+    # idを指定せずにすべてのメンバーを表示するには
+    # (/users/tigers というURLに応答)
+    #collection do
+    #  get :tigers
+    #end
+  end
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :microposts,          only: [:create, :destroy]
+  resources :relationships,       only: [:create, :destroy]
 end

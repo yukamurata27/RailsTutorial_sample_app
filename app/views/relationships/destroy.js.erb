@@ -1,0 +1,9 @@
+/* 引数の中で指定された要素(e.g. #follow_form)の内側にあるHTMLを更新します
+   例えばフォロー用フォーム全体を"foobar"という文字列で置き換えたい場合は
+   		$("#follow_form").html("foobar")
+
+   escape_javascriptメソッドは、
+   JavaScriptファイル内にHTMLを挿入するときに実行結果をエスケープするために必要です
+*/
+$("#follow_form").html("<%= escape_javascript(render('users/follow')) %>");
+$("#followers").html('<%= @user.followers.count %>');
